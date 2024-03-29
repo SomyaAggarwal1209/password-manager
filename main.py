@@ -26,18 +26,20 @@ canvas.create_image(100, 100, image=lock_img)
 canvas.grid(row=0, column=1)
 
 #Labels
-website_label = Label(text="Website:", fg=ORANGE, font=(FONT_NAME, 12), bg=PEACH)
+website_label = Label(text="Website:", fg=BLUE, font=(FONT_NAME, 12), bg=PEACH)
 website_label.grid(row=1, column=0)
-email_label = Label(text="Email/Username:", fg=ORANGE, font=(FONT_NAME, 12), bg=PEACH)
+email_label = Label(text="Email/Username:", fg=BLUE, font=(FONT_NAME, 12), bg=PEACH)
 email_label.grid(row=2, column=0)
-password_label = Label(text="Password:", fg=ORANGE, font=(FONT_NAME, 12), bg=PEACH)
+password_label = Label(text="Password:", fg=BLUE, font=(FONT_NAME, 12), bg=PEACH)
 password_label.grid(row=3, column=0)
 
 #Entries
 website_entry = Entry(width=52)
 website_entry.grid(row=1, column=1, columnspan=2)
+website_entry.focus()
 email_entry = Entry(width=52)
 email_entry.grid(row=2, column=1, columnspan=2)
+email_entry.insert(0, "dummy_email@gmail.com")
 password_entry = Entry(width=34)
 password_entry.grid(row=3, column=1)
 
