@@ -15,6 +15,19 @@ FONT_NAME = "Courier"
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
+def save():
+    website = website_entry.get()
+    email = email_entry.get()
+    password = password_entry.get()
+
+    with open("data.txt", "a") as data_file:
+        data_file.write(f"{website} | {email} | {password}\n")
+        website_entry.delete(0, END)
+        email_entry.delete(0, END)
+        password_entry.delete(0, END)
+        added_label = Label(text="Password Added Successfully!", fg=GREEN, font=(FONT_NAME, 8, "bold"), bg=PEACH)
+        added_label.grid(row=0, column=1)
+
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Password Manager")
