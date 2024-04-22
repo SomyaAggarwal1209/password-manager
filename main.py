@@ -4,15 +4,9 @@ from random import choice, randint, shuffle
 import pyperclip
 import json
 
-PINK = "#FFB6B9"
 PEACH = "#FAE3D9"
-GREEN = "#178329"
-TEAL = "#61C0BF"
-
-BLUE = "#2B2E4A"
-ORANGE = "#E84545"
-MAROON = "#903749"
 BROWN = "#53354A"
+WHITE = "white"
 FONT_NAME = "Courier"
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -55,7 +49,7 @@ def save():
             with open("data.json", "r") as data_file:
                 # reading old data
                 data = json.load(data_file)
-        except FileNotFoundError:
+        except (FileNotFoundError, json.JSONDecodeError):
             with open("data.json", "w") as data_file:
                 json.dump(new_data, data_file, indent=4)
         else:
@@ -67,9 +61,23 @@ def save():
         finally:
             website_entry.delete(0, END)
             password_entry.delete(0, END)
-            added_label = Label(text="Password Added Successfully!", fg=GREEN, font=(FONT_NAME, 8, "bold"),
-                                bg=PEACH)
-            added_label.grid(row=0, column=1)
+
+# ---------------------------- FIND PASSWORD ------------------------------- #
+
+def find_password():
+    website = website_entry.get()
+    try:
+        with open("data.json") as data_file:
+            data = json.load(data_file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        messagebox.showinfo(title="Error", message="No Data File Found.")
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=website, message=f"Email: {email}\nPassword: {password}")
+        else:
+            messagebox.showinfo(title="Error", message=f"No details for {website} exists.")
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -80,31 +88,34 @@ window.config(padx=60, pady=60, bg=PEACH)
 canvas = Canvas(width=200, height=200, bg=PEACH, highlightthickness=0)
 lock_img = PhotoImage(file="logo.png")
 canvas.create_image(100, 100, image=lock_img)
-canvas.grid(row=1, column=1)
+canvas.grid(row=0, column=1)
 
 #Labels
-website_label = Label(text="Website:", fg=BLUE, font=(FONT_NAME, 12), bg=PEACH)
-website_label.grid(row=2, column=0)
-email_label = Label(text="Email/Username:", fg=BLUE, font=(FONT_NAME, 12), bg=PEACH)
-email_label.grid(row=3, column=0)
-password_label = Label(text="Password:", fg=BLUE, font=(FONT_NAME, 12), bg=PEACH)
-password_label.grid(row=4, column=0)
+website_label = Label(text="Website:", fg=BROWN, font=(FONT_NAME, 12, "bold"), bg=PEACH)
+website_label.grid(row=1, column=0)
+email_label = Label(text="Email/Username:", fg=BROWN, font=(FONT_NAME, 12, "bold"), bg=PEACH)
+email_label.grid(row=2, column=0)
+password_label = Label(text="Password:", fg=BROWN, font=(FONT_NAME, 12, "bold"), bg=PEACH)
+password_label.grid(row=3, column=0)
 
 #Entries
-website_entry = Entry(width=52)
-website_entry.grid(row=2, column=1, columnspan=2)
+website_entry = Entry(width=34)
+website_entry.grid(row=1, column=1)
 website_entry.focus()
 email_entry = Entry(width=52)
-email_entry.grid(row=3, column=1, columnspan=2)
+email_entry.grid(row=2, column=1, columnspan=2)
 email_entry.insert(0, "dummy_email@gmail.com")
 password_entry = Entry(width=34)
-password_entry.grid(row=4, column=1)
+password_entry.grid(row=3, column=1)
 
 #Buttons
-generate_password_button = Button(text="Generate Password", width=14, command=generate_password)
-generate_password_button.grid(row=4, column=2)
-add_button = Button(text="Add", width=44, command=save)
-add_button.grid(row=5, column=1, columnspan=2)
+search_button = Button(text="Search", width=14, command=find_password, fg=WHITE, bg=BROWN)
+search_button.grid(row=1, column=2)
+generate_password_button = Button(text="Generate Password", width=14, command=generate_password, fg=WHITE, bg=BROWN)
+generate_password_button.grid(row=3, column=2)
+add_button = Button(text="Add", width=44, command=save, fg=WHITE, bg=BROWN)
+add_button.grid(row=4, column=1, columnspan=2)
+
 
 window.mainloop()
 
