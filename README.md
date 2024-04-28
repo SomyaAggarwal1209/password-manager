@@ -5,7 +5,7 @@ Password Manager is a simple application built using Python and Tkinter that hel
 ## Features
 
 - Generate strong and secure passwords with just a click.
-- Store website URLs, usernames, and passwords securely.
+- Store website names, usernames, and passwords securely.
 - Search for saved passwords by website URL.
 - Easy-to-use graphical user interface (GUI) built with Tkinter.
 
@@ -15,5 +15,5 @@ Password Manager is a simple application built using Python and Tkinter that hel
 2. Enter the website URL, email or username, and password for the account you want to save.
 3. Click on the "Add" button to save the login credentials.
 4. To generate a strong password, click on the "Generate Password" button and the generated password will be copied to your clipboard automatically.
-5. To search for a saved password, enter the website URL and click on the "Search" button.
+5. To search for a saved password, enter the website name and click on the "Search" button.
 
